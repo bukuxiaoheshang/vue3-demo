@@ -5,7 +5,8 @@
       <h2>最简单的CURD demo</h2>
     </div>
     <div class="query-box">
-      <el-input class="queryInput" v-model="queryInput"  placeholder="请输入姓名搜素" />
+      <el-input class="queryInput" v-model="queryInput"  placeholder="请输入姓名搜索" 
+      @input="handleQueryName"/>
       <div class="btn-list">
         <el-button  type="primary"  @click="handleAdd">增加</el-button>
         <el-button  type="danger"  @click="handleDelList" v-if="multipleSelection.length>0">删除多选</el-button>
@@ -99,6 +100,7 @@
  
   },
 ])
+  let tableCpy = Object.assign(tableData) 
   let  multipleSelection = $ref([])
   let dialogFormVisible =$ref(false)
   let tableForm = $ref({
@@ -169,6 +171,15 @@ const handleDelList = (val)=> {
   multipleSelection=[]
 }
 
+const handleQueryName = (val)=> {
+  console.log(queryInput);
+  if(queryInput.length>0){
+    tableData = tableData.filter(item=>item.name.toLowerCase().match(val.toLowerCase()))
+  } else {
+    tableData = tableCpy
+  }
+ 
+}
 
 </script>
 
